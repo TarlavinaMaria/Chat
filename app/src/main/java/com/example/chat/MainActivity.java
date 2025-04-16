@@ -6,6 +6,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,7 +25,15 @@ public class MainActivity extends AppCompatActivity {
         editText = findViewById(R.id.inputText);
         button = findViewById(R.id.sendButton);
 
-        viewModel = new ViewModelProvider(this).get(ChatViewModel.class);
+        IChatModel chatModel = new ChatModel();
+        ViewModelProvider.Factory factory = new ViewModelProvider.Factory() {
+            @Override
+            public <T extends ViewModel> T create(Class<T> modelClass) {
+                return (T) new ChatViewModel(chatModel);
+            }
+        };
+
+        viewModel = new ViewModelProvider(this, factory).get(ChatViewModel.class);
 
         viewModel.getResponseLiveData().observe(this, response -> {
             textView.setText(response);
@@ -47,4 +56,3 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 }
-

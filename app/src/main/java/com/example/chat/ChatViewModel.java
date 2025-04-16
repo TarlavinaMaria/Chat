@@ -6,13 +6,13 @@ import androidx.lifecycle.ViewModel;
 
 public class ChatViewModel extends ViewModel {
 
-    private final ChatModel model;
+    private final IChatModel model;
     private final MutableLiveData<String> responseLiveData = new MutableLiveData<>();
     private final MutableLiveData<String> errorLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> loadingLiveData = new MutableLiveData<>();
 
-    public ChatViewModel() {
-        this.model = new ChatModel();
+    public ChatViewModel(IChatModel model) {
+        this.model = model;
     }
 
     public LiveData<String> getResponseLiveData() {

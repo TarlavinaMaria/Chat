@@ -1,7 +1,5 @@
 //package com.example.chat;
 
-// Убираем из проекта, так как перерисан на MVVM, а не MVP
-
 //public class ChatPresenter implements ChatContract.Presenter {
 //
 //    ChatContract.View view;

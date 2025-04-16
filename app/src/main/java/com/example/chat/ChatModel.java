@@ -16,8 +16,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class ChatModel {
-    final String API_KEY = "sk-cf6742194e954b2dbcaf5cfd7385cc4b";
+public class ChatModel implements IChatModel {
+    final String API_KEY = "";
     final String API_URL = "https://api.deepseek.com/v1/chat/completions";
 
     final OkHttpClient client = new OkHttpClient.Builder()
@@ -27,11 +27,12 @@ public class ChatModel {
             .build();
 
     public interface ChatCallback {
-        void onSuccess(String responce);
+        void onSuccess(String response);
 
         void onFailure(String error);
     }
 
+    @Override
     public void sendMessage(String message, ChatCallback callback) {
         try {
             JSONObject json = new JSONObject();
@@ -66,11 +67,10 @@ public class ChatModel {
                         callback.onFailure("HTTP " + response.code() + ":" + errorBody);
                         return;
                     }
-                    //Если ответ успешен
                     try {
                         String responseBody = response.body().string();
-                        JSONObject jsonResponce = new JSONObject(responseBody);
-                        String reply = jsonResponce.getJSONArray("choices")
+                        JSONObject jsonResponse = new JSONObject(responseBody);
+                        String reply = jsonResponse.getJSONArray("choices")
                                 .getJSONObject(0)
                                 .getJSONObject("message")
                                 .getString("content");
