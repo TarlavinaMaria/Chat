@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements ChatContract.View
             public void onClick(View view) {
                 String message = editText.getText().toString();
                 presenter.sendMessage(message);
+                editText.setText("");
             }
         });
     }
